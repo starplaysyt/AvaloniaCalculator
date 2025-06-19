@@ -1,0 +1,31 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="AvaloniaCalculator.App"
+             xmlns:local="using:AvaloniaCalculator"
+             RequestedThemeVariant="Default">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
+    <Application.DataTemplates>
+        <local:ViewLocator/>
+    </Application.DataTemplates>
+             
+    <Application.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceInclude Source="avares://Avalonia.Fonts.Roboto/RobotoMonoFontResources.axaml" />
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+    </Application.Resources>
+  
+    <Application.Styles>
+        <FluentTheme/>
+        <Style Selector="TextBox">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+        </Style>
+        <Style Selector="TextBox:focused">
+            <Setter Property="BorderBrush" Value="DarkBlue"/>
+            <Setter Property="Background" Value="#F0F8FF"/>
+        </Style>
+    </Application.Styles>
+</Application>

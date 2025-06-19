@@ -1,0 +1,197 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AvaloniaCalculator.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="580" d:DesignHeight="509"
+        x:Class="AvaloniaCalculator.Views.MainWindowMac"
+        x:DataType="vm:MainWindowMacViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="AvaloniaCalculator"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        ExtendClientAreaTitleBarHeightHint="0"
+        Width="529"
+        Height="331"
+        Resized="WindowBase_OnResized"
+        MinHeight="529"
+        MinWidth="331"
+        ExtendClientAreaToDecorationsHint="True"
+        KeyDown="InputElement_OnKeyDown">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowMacViewModel/>
+    </Design.DataContext>
+    
+    <Window.Styles>
+        <Styles>
+            <!-- Обычный TextBox -->
+            <Style Selector="TextBox">
+                <Setter Property="FontFamily" Value="{DynamicResource RobotoMonoThin}"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="#000000"/>
+                <Setter Property="BorderThickness" Value="3"/>
+                <Setter Property="CornerRadius" Value="0"/>
+                <Setter Property="Padding" Value="0 0 10 5"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+                <Setter Property="FontSize" Value="40"/>
+                <Setter Property="CaretBrush" Value="Transparent"/>
+            </Style>
+
+            <!-- При наведении -->
+            <Style Selector="TextBox:pointerover">
+                <Setter Property="BorderBrush" Value="DodgerBlue"/>
+            </Style>
+            
+            <Style Selector="TextBox:pointerover /template/ TextBlock#PART_Watermark">
+                <Setter Property="Background" Value="Transparent"></Setter>
+                </Style>
+            
+            <Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
+                <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                <Setter Property="Background" Value="Transparent"/>
+            </Style>
+
+            <!-- При фокусе -->
+            <Style Selector="TextBox:focused">
+                <Setter Property="BorderBrush" Value="DarkBlue"/>
+                <Setter Property="Background" Value="Gray"/>
+            </Style>
+
+            <!-- Отключенный TextBox -->
+            <Style Selector="TextBox:disabled">
+                <Setter Property="Background" Value="Gray"/>
+                <Setter Property="Foreground" Value="DarkGray"/>
+            </Style>
+
+            <!-- Невалидный (например, с ошибкой валидации) -->
+            <Style Selector="TextBox:invalid">
+                <Setter Property="BorderBrush" Value="Red"/>
+                <Setter Property="ToolTip.Tip" Value="Ошибка ввода"/>
+            </Style>
+            
+            <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+            </Style>
+            
+            <Style Selector="TextBox:disabled /template/ Border#PART_BorderElement">
+                <Setter Property="Background" Value="Transparent"></Setter>
+            </Style>
+            
+            <Style Selector="Button.KeyButton">
+                <Setter Property="Margin" Value="5 5 0 0"/>
+                <Setter Property="FontFamily" Value="{DynamicResource RobotoMonoBold}"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="CornerRadius" Value="10"/>
+            </Style>
+        </Styles>
+    </Window.Styles>
+    
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="#58282828"
+                    TintOpacity="0.53"
+                    MaterialOpacity="0.3"/>
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+            
+        <Border>
+            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                  RowSpacing="5" ColumnSpacing="5" Margin="10 0 10 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                
+                <StackPanel Grid.Column="0"
+                            Background="Transparent" PointerPressed="TitleBar_PointerPressed" 
+                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            Grid.ColumnSpan="4">
+                </StackPanel>
+                
+                <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Orientation="Vertical">
+                    <TextBox x:Name="OperationsTextBox" Margin=" 5 0 5 0" Height="100" VerticalAlignment="Bottom" TextAlignment="Right" BorderThickness="0"
+                             FontSize="15"
+                             FontFamily="{DynamicResource RobotoMonoBold}"
+                             Foreground="LightGray" IsEnabled="true" IsReadOnly="True" Text="{Binding ListOfOperations}"
+                             TextWrapping="Wrap">
+                    </TextBox>
+                    <TextBox x:Name="InputTextBox" 
+                             FontFamily="{DynamicResource RobotoMonoBold}"
+                             Margin=" 5 0 5 0" Height="80" TextAlignment="Right" BorderThickness="0"
+                             Foreground="White" IsEnabled="False" MaxLines="1" TextWrapping="Wrap" Padding="10"
+                             Text="{Binding InputText}">
+                    </TextBox>
+                </StackPanel>
+                
+                <Button Grid.Row="3" Grid.Column="0" x:Name="Button1" Classes="KeyButton" Click="NumericButton_OnClick" Content="1"/>
+                <Button Grid.Row="3" Grid.Column="1" x:Name="Button2" Classes="KeyButton" Click="NumericButton_OnClick" Content="2"/>
+                <Button Grid.Row="3" Grid.Column="2" x:Name="Button3" Classes="KeyButton" Click="NumericButton_OnClick" Content="3"/>
+                <Button Grid.Row="4" Grid.Column="0" x:Name="Button4" Classes="KeyButton" Click="NumericButton_OnClick" Content="4"/>
+                <Button Grid.Row="4" Grid.Column="1" x:Name="Button5" Classes="KeyButton" Click="NumericButton_OnClick" Content="5"/>
+                <Button Grid.Row="4" Grid.Column="2" x:Name="Button6" Classes="KeyButton" Click="NumericButton_OnClick" Content="6"/>
+                <Button Grid.Row="5" Grid.Column="0" x:Name="Button7" Classes="KeyButton" Click="NumericButton_OnClick" Content="7"/>
+                <Button Grid.Row="5" Grid.Column="1" x:Name="Button8" Classes="KeyButton" Click="NumericButton_OnClick" Content="8"/>
+                <Button Grid.Row="5" Grid.Column="2" x:Name="Button9" Classes="KeyButton" Click="NumericButton_OnClick" Content="9"/>
+                <Button Grid.Row="6" Grid.Column="2" x:Name="Button0" Classes="KeyButton" Click="NumericButton_OnClick" Content="0"/>
+                <Button Grid.Row="3" Grid.Column="3" x:Name="ButtonPlus" Classes="KeyButton" 
+                        Command="{Binding PlusButtonClickCommand}" Content="+"/>
+                <Button Grid.Row="4" Grid.Column="3" x:Name="ButtonMinus" Classes="KeyButton" 
+                        Command="{Binding MinusButtonClickCommand}" Content="-"/>
+                <Button Grid.Row="5" Grid.Column="3" x:Name="ButtonMultiply" Classes="KeyButton" 
+                        Command="{Binding MultiplyButtonClickCommand}" Content="*"/>
+                <Button Grid.Row="6" Grid.Column="3" x:Name="ButtonDivide" Classes="KeyButton" 
+                        Command="{Binding DivideButtonClickCommand}" Content="/"/>
+                <Button Grid.Row="6" Grid.Column="0" x:Name="ButtonEquals" Grid.ColumnSpan="2" Classes="KeyButton" 
+                        Command="{Binding ResultClickCommand}" Background="#ff8500" Content="="/>
+                
+                <Button Grid.Row="2" Grid.Column="0" x:Name="ButtonC" Classes="KeyButton" 
+                        Command="{Binding ClearValueCommand}" Content="C"/>
+                <Button Grid.Row="2" Grid.Column="1" x:Name="ButtonAC" Classes="KeyButton" 
+                        Command="{Binding ClearAllCommand}" Content="AC"/>
+                <Button Grid.Row="2" Grid.Column="2" x:Name="ButtonMPlus" Classes="KeyButton" 
+                        Command="{Binding MemorySetCommand}" Content="M+"/>
+                <Button Grid.Row="2" Grid.Column="3" x:Name="ButtonMR" Classes="KeyButton"
+                        Command="{Binding MemoryPasteCommand}" Content="MR"/>
+                <!-- <StackPanel Grid.Row="2" Grid.Column="0" Spacing="10" Margin="15 0 0 0"> -->
+                <!--     <TextBlock FontFamily="{DynamicResource RobotoMonoBold}">RobotoMonoBold</TextBlock> -->
+                <!--     <TextBlock FontFamily="{DynamicResource RobotoMonoBoldItalic}">RobotoMonoBoldItalic</TextBlock> -->
+                <!--     <TextBlock FontFamily="{DynamicResource RobotoMonoSemiBold}">RobotoMonoSemiBold</TextBlock> -->
+                <!--     <TextBlock FontFamily="{DynamicResource RobotoMonoSemiBoldItalic}">RobotoMonoSemiBoldItalic</TextBlock> -->
+                <!--     <TextBlock FontFamily="{DynamicResource RobotoMonoMedium}">RobotoMonoMedium</TextBlock> -->
+                <!--     <TextBlock FontFamily="{DynamicResource RobotoMonoMediumItalic}">RobotoMonoMediumItalic</TextBlock> -->
+                <!--     <TextBlock FontFamily="{DynamicResource RobotoMono}">RobotoMono</TextBlock> -->
+                <!--     <TextBlock FontFamily="{DynamicResource RobotoMonoItalic}">RobotoMonoItalic</TextBlock> -->
+                <!--     <TextBlock FontFamily="{DynamicResource RobotoMonoLight}">RobotoMonoLight</TextBlock> -->
+                <!--     <TextBlock FontFamily="{DynamicResource RobotoMonoLightItalic}">RobotoMonoLightItalic</TextBlock> -->
+                <!--     <TextBlock FontFamily="{DynamicResource RobotoMonoExtraLight}">RobotoMonoExtraLight</TextBlock> -->
+                <!--     <TextBlock FontFamily="{DynamicResource RobotoMonoExtraLightItalic}">RobotoMonoExtraLightItalic</TextBlock> -->
+                <!--     <TextBlock FontFamily="{DynamicResource RobotoMonoThin}">RobotoMonoThin</TextBlock> -->
+                <!--     <TextBlock FontFamily="{DynamicResource RobotoMonoThinItalic}">RobotoMonoThinItalic</TextBlock> -->
+                <!-- </StackPanel> -->
+            </Grid>
+        </Border>
+    </Panel>
+</Window>
