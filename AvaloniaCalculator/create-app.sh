@@ -14,7 +14,9 @@ ICON_ICNS="$APP_NAME.icns"
 echo "🛠 Публикация проекта..."
 dotnet publish -c $CONFIG -r $RUNTIME --self-contained true /p:PublishSingleFile=true \
 /p:PublishReadyToRun=true \
-/p:PublishStripSymbols=true
+/p:PublishStripSymbols=true \
+/p:PublishTrimmed=true \
+ /p:TrimMode=link
 
 
 # 2. Создание .icns из .png
